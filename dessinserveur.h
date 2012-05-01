@@ -15,6 +15,11 @@ public:
     explicit DessinServeur(QWidget *parent = 0);
     ~DessinServeur();
     
+private slots:
+    void on_btnStartServ_clicked();
+signals:
+    void siNouvClient(QByteArray);
+
 private:
     Ui::DessinServeur *ui;
 };

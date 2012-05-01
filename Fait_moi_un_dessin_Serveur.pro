@@ -4,15 +4,19 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 TARGET = Fait_moi_un_dessin_Serveur
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        dessinserveur.cpp
+        dessinserveur.cpp \
+    tcpserveur.cpp \
+    thclient.cpp
 
-HEADERS  += dessinserveur.h
+HEADERS  += dessinserveur.h \
+    tcpserveur.h \
+    thclient.h
 
 FORMS    += dessinserveur.ui
