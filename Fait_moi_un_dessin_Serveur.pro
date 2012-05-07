@@ -13,10 +13,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         dessinserveur.cpp \
     tcpserveur.cpp \
-    thclient.cpp
+    thclient.cpp \
+    thmaitre.cpp
 
 HEADERS  += dessinserveur.h \
     tcpserveur.h \
-    thclient.h
+    thclient.h \
+    thmaitre.h
 
 FORMS    += dessinserveur.ui

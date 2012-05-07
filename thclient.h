@@ -11,11 +11,11 @@ public:
     ThClient(int socketDescriptor);
     QByteArray m_Info;
     int m_Socket;
-    
+    void run();
 signals:
     
 public slots:
-    void slCommServ(QByteArray);
+    void slCommServ();
     
 };
 
