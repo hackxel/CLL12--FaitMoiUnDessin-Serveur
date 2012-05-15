@@ -2,7 +2,7 @@
 #define THMAITRE_H
 
 #include <QThread>
-
+#include <tcpserveur.h>
 class thMaitre : public QThread
 {
     Q_OBJECT
@@ -14,9 +14,10 @@ public:
     int m_Socket;
 
 signals:
-
+    void siNouveauPoint(QByteArray);
+    void siEndGame();
 public slots:
-    void slMaitre();
+private:
     
 };
 

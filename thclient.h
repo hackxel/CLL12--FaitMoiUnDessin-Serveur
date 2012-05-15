@@ -15,8 +15,11 @@ public:
 signals:
     
 public slots:
-    void slCommServ();
-    
+    void slTransmiPoint(QByteArray);
+    void slEndGame();
+private:
+    QByteArray m_Point;
+    bool m_Connection;
 };
 
 #endif // THCLIENT_H

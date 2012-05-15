@@ -15,6 +15,9 @@ DessinServeur::DessinServeur(QWidget *parent) :
 {
     ui->setupUi(this);
     m_MaitreJeu = false;
+
+    ui->lblBackground->setPixmap(QPixmap("christalis.png"));
+   // lbl->setPixmap(QPixmap("christalis.png"));
 }
 
 DessinServeur::~DessinServeur()
@@ -24,22 +27,23 @@ DessinServeur::~DessinServeur()
 
 void DessinServeur::on_btnStartServ_clicked()
 {
-    QByteArray Image;
-    bool test;
+    bool test = true;
     m_ServeurDeDessin = new TcpServeur();
     //COnnection des signaux
-    connect(this,SIGNAL(siNouvClient(bool)),m_ServeurDeDessin,SLOT(slNouvClient(bool)));
-    if(test = m_ServeurDeDessin->listen(QHostAddress::Any,61500))
-    {
-        //ServeurDeDessin->waitForNewConnection();
-
-
-        if(m_MaitreJeu == false)
-        {
-            emit(siNouvClient(m_MaitreJeu));
-            m_MaitreJeu = true;
-        }
-        else
-            emit(siNouvClient(m_MaitreJeu));
-    }
+    //connect(this,SIGNAL(siNouvClient(bool)),m_ServeurDeDessin,SLOT(slNouvClient(bool)));
+    //connect(m_ServeurDeDessin,SIGNAL(newConnection()),this,SLOT(slNouvConnection()));
+   m_ServeurDeDessin->listen(QHostAddress::Any,61500);
 }
+/*void DessinServeur::slNouvConnection()
+{
+    if(m_MaitreJeu == false)
+    {
+        emit(siNouvClient());
+
+    }
+    else
+    {
+       emit(siNouvClient());
+    }
+}*/
+

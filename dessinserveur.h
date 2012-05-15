@@ -15,16 +15,18 @@ public:
     explicit DessinServeur(QWidget *parent = 0);
     ~DessinServeur();
 
-    bool m_MaitreJeu;
+
 private slots:
     void on_btnStartServ_clicked();
+    void slNouvConnection();
 signals:
     //Signal client
-    void siNouvClient(bool);
+    //void siNouvClient();
 
 private:
     TcpServeur *m_ServeurDeDessin;
     Ui::DessinServeur *ui;
+    bool m_MaitreJeu;
 };
 
 #endif // DESSINSERVEUR_H

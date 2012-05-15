@@ -12,7 +12,7 @@ ThClient::ThClient(int socketDescriptor)
 void ThClient::run()
 {
     QByteArray baReception;
-
+    m_Connection = true;
     QTcpSocket socket;
     socket.setSocketDescriptor(m_Socket);
     socket.waitForConnected();
@@ -20,9 +20,17 @@ void ThClient::run()
     //Envoi du caractère C au maitre
     socket.write(baReception);
     socket.waitForReadyRead();
+    do
+    {
+      socket.write(m_Point);
+      socket.waitForBytesWritten();
+    }while(m_Connection);
 }
-
-void ThClient::slCommServ()
+void ThClient::slTransmiPoint(QByteArray Point)
 {
-
+    m_Point = Point;
+}
+void ThClient::slEndGame()
+{
+    m_Connection = false;
 }
