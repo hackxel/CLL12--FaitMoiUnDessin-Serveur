@@ -34,16 +34,3 @@ void DessinServeur::on_btnStartServ_clicked()
     //connect(m_ServeurDeDessin,SIGNAL(newConnection()),this,SLOT(slNouvConnection()));
    m_ServeurDeDessin->listen(QHostAddress::Any,61500);
 }
-/*void DessinServeur::slNouvConnection()
-{
-    if(m_MaitreJeu == false)
-    {
-        emit(siNouvClient());
-
-    }
-    else
-    {
-       emit(siNouvClient());
-    }
-}*/
-

@@ -15,40 +15,34 @@ void TcpServeur::incomingConnection(int socketDescriptor)
     {
         m_Etat = true;
         thMaitre *Maitre = new thMaitre(socketDescriptor);
-        connect(Maitre,SIGNAL(siNouveauPoint(QByteArray)),SLOT(slNouvPoint(QByteArray)));
-        connect(Maitre,SIGNAL(siEndGame()),SLOT(slEndGame()));
+        connect(Maitre,SIGNAL(siNouveauPoint(QByteArray)),this,SLOT(slNouvPoint(QByteArray)));
+        connect(Maitre,SIGNAL(sitest(QByteArray)),this,SLOT(sltest(QByteArray)));   //signal nouveau point
+        //connect(Maitre,SIGNAL(siEndGame()),this,SLOT(slEndGame()));
         Maitre->start();
         m_cpt++;
     }
     else
     {
         ThClient *Client = new ThClient(socketDescriptor);
-        //connect(this,SIGNAL(siCommClient()),Client,SLOT(slCommServ()));
         connect(this,SIGNAL(siTransmiPoint(QByteArray)),Client,SLOT(slTransmiPoint(QByteArray)));
-        connect(this,SIGNAL(siEndGame()),Client,SLOT(slEndGame()));
+        //connect(this,SIGNAL(siEndGame()),Client,SLOT(slEndGame()));
+        connect(this,SIGNAL(sitestpoint(QByteArray)),Client,SLOT(slTestClient(QByteArray)));    //connect signal transmi nouveau point à un client
         Client->start();
     }
 }
-/*void TcpServeur::slNouvClient()
-{
-    //émettre signal de client
-    if (m_cpt == 2)
-        int i = 0;
-    if(m_Etat == false)
-    {
-        //emit(siCommMaitre());
-    }
-    else
-    {
-        //emit(siCommClient());
-    }
-}*/
+
 void TcpServeur::slNouvPoint(QByteArray Point)
 {
-    //transmettre aux clients le nouveau point
-    emit(siTransmiPoint(Point));
+    m_cpt++;
+    emit(siTransmiPoint(Point));    //transmettre aux clients le nouveau point
 }
-void TcpServeur::slEndGame()
+/*void TcpServeur::slEndGame()
 {
     emit(siEndGame());
+}*/
+void TcpServeur::sltest(QByteArray Image)
+{
+    QByteArray Im = Image;
+    emit(sitestpoint(Im));
+    Im.clear();
 }

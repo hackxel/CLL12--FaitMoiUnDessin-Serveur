@@ -16,6 +16,7 @@ public:
 signals:
     void siNouveauPoint(QByteArray);
     void siEndGame();
+    void sitest(QByteArray);
 public slots:
 private:
     

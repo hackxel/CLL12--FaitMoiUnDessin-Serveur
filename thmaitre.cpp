@@ -9,7 +9,6 @@ thMaitre::thMaitre(QObject *parent) :
 thMaitre::thMaitre(int socketDescriptor)
 {
     m_Socket = socketDescriptor;
-    //m_Serv = Serveur;
 }
 
 void thMaitre::run()
@@ -17,27 +16,34 @@ void thMaitre::run()
     QByteArray baReception;
     bool connection = true;
     QTcpSocket socketM;
-    //connect(this,SIGNAL(siNouveauPoint(QByteArray)),this,SLOT(slNouvPoint(QByteArray)));
     socketM.setSocketDescriptor(m_Socket);
     socketM.waitForConnected();
-    baReception.append("#");
-    //Envoi du caractère # au maitre
-    socketM.write(baReception);
+    baReception.append("M");
+    socketM.write(baReception); //Envoi du caractère # au maitre
     socketM.waitForReadyRead();
+    QByteArray Transmission;
     do
     {
-        connection = socketM.waitForReadyRead(30000);
+        connection = socketM.waitForReadyRead();
         if(connection)
         {
+
             baReception = socketM.read(socketM.bytesAvailable());
-            emit(siNouveauPoint(baReception));
+            while(baReception.size() >= 4)
+            {
+                Transmission = baReception.left(4); //obtenir les coordonnées x,y
+                emit(sitest(Transmission)); //transmettre le point
+                baReception.remove(0,4); //enlever le point de la liste
+            }
+            //baReception.clear();
+            //emit(siNouveauPoint(baReception));
         }
         //maitre à quitté la partie
         else
         {
-            emit(siEndGame());
+           //emit(siEndGame());
         }
-        baReception.clear();
+        //baReception.clear();
     }while(connection);
 
     //socketM.disconnect();

@@ -13,7 +13,7 @@ void ThClient::run()
 {
     QByteArray baReception;
     m_Connection = true;
-    QTcpSocket socket;
+    //QTcpSocket socket;
     socket.setSocketDescriptor(m_Socket);
     socket.waitForConnected();
     baReception.append("C");
@@ -22,15 +22,27 @@ void ThClient::run()
     socket.waitForReadyRead();
     do
     {
+
       socket.write(m_Point);
       socket.waitForBytesWritten();
     }while(m_Connection);
+    socket.write("F");
+
 }
 void ThClient::slTransmiPoint(QByteArray Point)
 {
     m_Point = Point;
+    socket.write(m_Point);
+    socket.waitForBytesWritten();
 }
-void ThClient::slEndGame()
+/*void ThClient::slEndGame()
 {
     m_Connection = false;
+}*/
+void ThClient::slTestClient(QByteArray Point)
+{
+    m_Point = Point;
+    socket.write(m_Point);
+    socket.waitForBytesWritten();
+    m_Point.clear();
 }
