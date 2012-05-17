@@ -20,8 +20,6 @@ private slots:
     void on_btnStartServ_clicked();
     void slNouvConnection();
 signals:
-    //Signal client
-    //void siNouvClient();
 
 private:
     TcpServeur *m_ServeurDeDessin;

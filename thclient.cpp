@@ -5,35 +5,43 @@ ThClient::ThClient(QObject *parent) :
     QThread(parent)
 {
 }
-ThClient::ThClient(int socketDescriptor)
+ThClient::ThClient(int socketDescriptor, QByteArray mot)
 {
     m_Socket = socketDescriptor;
+    m_Mot.append(mot);
 }
 void ThClient::run()
 {
     QByteArray baReception;
     m_Connection = true;
-    //QTcpSocket socket;
+    //initialisation du socket
     socket.setSocketDescriptor(m_Socket);
+    //attente de connection
     socket.waitForConnected();
+    //Envoi du caractère C au client
     baReception.append("C");
-    //Envoi du caractère C au maitre
     socket.write(baReception);
     socket.waitForReadyRead();
+    int i = 0;
     do
     {
-
-      socket.write(m_Point);
-      socket.waitForBytesWritten();
+          //vérification si le client a fait un essais
+          if(socket.bytesAvailable() > 0)
+          {
+              baReception = socket.read(socket.bytesAvailable());
+              emit(siEssais(baReception));
+              /*while(baReception[i] == m_Mot[i] )
+              {
+                  i++;
+              }
+              if(i == m_Mot.length())
+              {
+                  bool chat =true;
+              }*/
+          }
     }while(m_Connection);
     socket.write("F");
 
-}
-void ThClient::slTransmiPoint(QByteArray Point)
-{
-    m_Point = Point;
-    socket.write(m_Point);
-    socket.waitForBytesWritten();
 }
 /*void ThClient::slEndGame()
 {
@@ -45,4 +53,9 @@ void ThClient::slTestClient(QByteArray Point)
     socket.write(m_Point);
     socket.waitForBytesWritten();
     m_Point.clear();
+}
+void ThClient::slMot(QByteArray Mot)
+{
+    m_Mot.append(Mot);
+
 }

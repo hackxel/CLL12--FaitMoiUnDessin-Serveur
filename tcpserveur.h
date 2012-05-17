@@ -13,20 +13,22 @@ public:
 protected:
     void incomingConnection(int socketDescriptor);
 signals:
-    void siCommClient();
-
-    void siCommMaitre();//signal a émettre à la connection du maitre
-
-    void siTransmiPoint(QByteArray);//émettre à la réception d'un nouveau point
     //émettre à la fin de partie
     //void siEndGame();
     void sitestpoint(QByteArray);
+    //émettre au client pour comparer les essais
+    void siMot(QByteArray);
 public slots:
     //void slNouvClient();
     void slNouvPoint(QByteArray);
     //émettre quand le maitre se déconnecte
     //void slEndGame();
     void sltest(QByteArray);
+    void slTranMot(QByteArray);
+    //slot pour tester l'essais
+    void slEssais(QByteArray);
+private:
+    QByteArray m_MotATrouver;
 };
 
 #endif // TCPSERVEUR_H

@@ -1,4 +1,4 @@
-/* *** Fait moi un dessin *** */
+ /* *** Fait moi un dessin *** */
 /* *** Projet Final Linux *** */
 /* *** Jérémie Tremblay et Axel Gauthier-Bélanger *** */
 /* *** Mai 2012 *** */
@@ -27,10 +27,6 @@ DessinServeur::~DessinServeur()
 
 void DessinServeur::on_btnStartServ_clicked()
 {
-    bool test = true;
     m_ServeurDeDessin = new TcpServeur();
-    //COnnection des signaux
-    //connect(this,SIGNAL(siNouvClient(bool)),m_ServeurDeDessin,SLOT(slNouvClient(bool)));
-    //connect(m_ServeurDeDessin,SIGNAL(newConnection()),this,SLOT(slNouvConnection()));
    m_ServeurDeDessin->listen(QHostAddress::Any,61500);
 }

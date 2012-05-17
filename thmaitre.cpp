@@ -19,32 +19,27 @@ void thMaitre::run()
     socketM.setSocketDescriptor(m_Socket);
     socketM.waitForConnected();
     baReception.append("M");
-    socketM.write(baReception); //Envoi du caractère # au maitre
+    socketM.write(baReception); //Envoi du caractère M au maitre
     socketM.waitForReadyRead();
     QByteArray Transmission;
+   baReception = socketM.read(socketM.bytesAvailable());
+   emit(siTranMot(baReception)); //envoyer le mot à trouver
+   baReception.clear();
     do
     {
         connection = socketM.waitForReadyRead();
         if(connection)
         {
-
             baReception = socketM.read(socketM.bytesAvailable());
             while(baReception.size() >= 4)
             {
-                Transmission = baReception.left(4); //obtenir les coordonnées x,y
-                emit(sitest(Transmission)); //transmettre le point
-                baReception.remove(0,4); //enlever le point de la liste
+                //obtenir les coordonnées x,y
+                Transmission = baReception.left(4);
+                //transmettre le point
+                emit(sitest(Transmission));
+                //enlever le point de la liste
+                baReception.remove(0,4);
             }
-            //baReception.clear();
-            //emit(siNouveauPoint(baReception));
         }
-        //maitre à quitté la partie
-        else
-        {
-           //emit(siEndGame());
-        }
-        //baReception.clear();
     }while(connection);
-
-    //socketM.disconnect();
 }
